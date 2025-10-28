@@ -19,4 +19,16 @@ public List<User> getAllUsers() {
     return userRepository.findAll();
 }
 
+    public void deleteUserById(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    public String updateUser(Long id, User updatedUser) {
+        return userRepository.findById(id).map(user -> {
+            user.setName(updatedUser.getName());
+            user.setEmail(updatedUser.getEmail());
+            userRepository.save(user);
+            return "User updated successfully";
+        }).orElse("User not found");
+    }
 }
